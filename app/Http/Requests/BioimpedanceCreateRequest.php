@@ -30,6 +30,7 @@ class BioimpedanceCreateRequest extends FormRequest
             'basal_metabolism' => 'required|numeric',
             'metabolic_age' => 'required|numeric',
             'visceral_fat' => 'required|numeric',
+            'height' => 'required|numeric',
         ];
     }
 }

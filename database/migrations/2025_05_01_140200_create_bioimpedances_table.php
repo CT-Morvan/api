@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->datetime('exam_date');
             $table->float('weight');
+            $table->float('height');
             $table->float('imc');
             $table->float('fat_percentage');
             $table->float('muscle_percentage');
