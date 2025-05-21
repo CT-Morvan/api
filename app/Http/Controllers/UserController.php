@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,9 +18,7 @@ class UserController extends Controller
         try {
             $users = User::all();
             
-            return response()->json([
-                'data' => $users
-            ]);
+            return UserResource::collection($users);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error fetching users',
@@ -39,10 +38,7 @@ class UserController extends Controller
             
             $user = User::create($data);
             
-            return response()->json([
-                'message' => 'User created successfully',
-                'data' => $user
-            ], 201);
+            return new UserResource($user);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error creating user',
