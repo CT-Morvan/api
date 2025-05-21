@@ -13,4 +13,13 @@ class BioimpedanceService
             ...$data,
         ]);
     }
+
+    public function getLatestByUser(int $user_id, int $limit = 10)
+    {
+        return Bioimpedance::query()
+            ->where('user_id', $user_id)
+            ->orderBy('exam_date', 'DESC')
+            ->limit($limit)
+            ->get();
+    }
 }

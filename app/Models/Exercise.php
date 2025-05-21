@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Exercise extends Model
 {
@@ -11,4 +12,9 @@ class Exercise extends Model
         'video_url',
         'image_url',
     ];
+    
+    public function exerciseMaximums(): HasMany
+    {
+        return $this->hasMany(ExerciseMaximum::class);
+    }
 }
