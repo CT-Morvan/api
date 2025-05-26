@@ -10,6 +10,7 @@ class Bioimpedance extends Model
         'user_id',
         'exam_date',
         'weight',
+        'height',
         'imc',
         'fat_percentage',
         'muscle_percentage',

@@ -30,4 +30,11 @@ Route::prefix('{user_id}')->middleware(['auth:sanctum', InjectUserIdInRequestMid
 Route::prefix('/users')->middleware(['auth:sanctum', AdminMiddleware::class])->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::post('/', [UserController::class, 'store']);
+    Route::put('/{user}', [UserController::class, 'update']);
+    Route::delete('/{user}', [UserController::class, 'destroy']);
+});
+
+Route::prefix('/exercises')->middleware(['auth:sanctum', AdminMiddleware::class])->group(function () {
+    Route::post('/', [ExerciseController::class, 'store']);
+    Route::delete('/{exercise}', [ExerciseController::class, 'destroy']);
 });

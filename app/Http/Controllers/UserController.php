@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,6 +43,50 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error creating user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Update an existing user
+     */
+    public function update(UserUpdateRequest $request, User $user)
+    {
+        try {
+            $data = $request->validated();
+            
+            $user->update($data);
+            
+            return new UserResource($user);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete a user
+     */
+    public function destroy(User $user)
+    {
+        try {
+            // Delete related records first to avoid foreign key constraint violations
+            $user->bioimpedances()->delete();
+            $user->exerciseMaximums()->delete();
+            $user->tokens()->delete(); // Delete personal access tokens
+            
+            // Now delete the user
+            $user->delete();
+            
+            return response()->json([
+                'message' => 'User and all related data deleted successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error deleting user',
                 'error' => $e->getMessage()
             ], 500);
         }

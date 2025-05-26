@@ -12,7 +12,9 @@ class BioimpedanceController extends Controller
     public function store(BioimpedanceCreateRequest $request, BioimpedanceService $bioimpedanceService)
     {
         try {
-            $bioimpedanceService->create($request->user_id, $request->validated());
+            $bioimpedance = $bioimpedanceService->create($request->user_id, $request->validated());
+            
+            return (new BioimpedanceResource($bioimpedance))->response()->setStatusCode(201);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error creating bioimpedance',

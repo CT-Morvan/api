@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -45,5 +46,21 @@ class User extends Authenticatable
             'password' => 'hashed',
             'type' => UserTypeEnum::class,
         ];
+    }
+
+    /**
+     * Get the bioimpedances for the user.
+     */
+    public function bioimpedances(): HasMany
+    {
+        return $this->hasMany(Bioimpedance::class);
+    }
+
+    /**
+     * Get the exercise maximums for the user.
+     */
+    public function exerciseMaximums(): HasMany
+    {
+        return $this->hasMany(ExerciseMaximum::class);
     }
 }
