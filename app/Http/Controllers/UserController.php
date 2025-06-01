@@ -56,6 +56,11 @@ class UserController extends Controller
         try {
             $data = $request->validated();
             
+            // Hash the password if it's provided
+            if (isset($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            }
+            
             $user->update($data);
             
             return new UserResource($user);

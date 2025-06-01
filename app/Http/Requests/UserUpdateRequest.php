@@ -34,6 +34,7 @@ class UserUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($userId)
             ],
+            'password' => 'sometimes|required|string|min:8',
         ];
     }
 } 
